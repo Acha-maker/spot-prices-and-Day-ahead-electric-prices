@@ -1,7 +1,7 @@
-
-import requests
-import json
+from flask import Flask, jsonify
 from datetime import datetime
+
+app = Flask(__name__)
 
 # Sample data (just for illustration purposes)
 timestamps = [
@@ -28,8 +28,8 @@ class PriceData:
         # Convert timestamp to a human-readable date and time format
         self.date_time = datetime.utcfromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
 
-    def __repr__(self):
-        return f"{self.date_time}   {self.price}"
+    def to_dict(self):
+        return {"time": self.date_time, "price": self.price}
 
 # Combine timestamps and prices into PriceData objects
 price_data_objects = []
@@ -37,7 +37,10 @@ for ts, price in zip(timestamps, prices):
     price_data = PriceData(ts, price)
     price_data_objects.append(price_data)
 
-# Print the deserialized data with converted timestamps
-for price_data in price_data_objects:
-    print(price_data)
+@app.route('/api/prices', methods=['GET'])
+def get_prices():
+    # Return the prices as JSON
+    return jsonify({"prices": [price_data.to_dict() for price_data in price_data_objects]})
 
+if __name__ == '__main__':
+    app.run(debug=True)

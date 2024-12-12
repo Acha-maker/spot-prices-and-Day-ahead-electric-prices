@@ -1,4 +1,3 @@
-
 import requests
 import json
 from datetime import datetime
@@ -29,7 +28,7 @@ class PriceData:
         self.date_time = datetime.utcfromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
 
     def __repr__(self):
-        return f"{self.date_time}   {self.price}"
+        return f"{self.date_time}      {self.price} Eur"
 
 # Combine timestamps and prices into PriceData objects
 price_data_objects = []
@@ -40,4 +39,3 @@ for ts, price in zip(timestamps, prices):
 # Print the deserialized data with converted timestamps
 for price_data in price_data_objects:
     print(price_data)
-
