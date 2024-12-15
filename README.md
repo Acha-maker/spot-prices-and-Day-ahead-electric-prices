@@ -28,3 +28,7 @@ duration of charging for 2KW/h is 7hours.
 in the space of 24hours for data for Germany, the price was less than 50cent 8 times on december 15 2024.
 
 Charging duration depends sorely on how long the day ahead price is below 5cent/Kwh
+
+# Challenges
+As an Electrical Engineer, it was challenging for me to writte the codes that can fetch data from the back end and display in the front end 
+After lot of effort, I was able to code the front end and the back end without the best UI functionality but the logic I explained above is what is the logic I propose for the simullation.
