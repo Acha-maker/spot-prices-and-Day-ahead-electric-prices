@@ -1,7 +1,11 @@
 // Function to load electricity prices from the Python backend API
 async function loadPrices() {
     try {
-        const response = await fetch('Electricityprices.py');  // Call the Python API
+        // Make an API call to the Flask backend (assuming the Flask server is running)
+       
+       
+       
+        const response = await fetch('http://127.0.0.1:5000/api/prices');  // API endpoint from the Flask server
         const data = await response.json();  // Parse the response as JSON
 
         const tableBody = document.querySelector('#prices-table tbody');

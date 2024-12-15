@@ -1,8 +1,9 @@
-import requests
-import json
+from flask import Flask, jsonify
 from datetime import datetime
 
-# Sample data (just for illustration purposes)
+app = Flask(__name__)
+
+# Sample data for demonstration purposes
 timestamps = [
     1733821200, 1733824800, 1733828400, 1733832000, 1733835600, 1733839200, 1733842800,
     1733846400, 1733850000, 1733853600, 1733857200, 1733860800, 1733864400, 1733868000,
@@ -27,8 +28,8 @@ class PriceData:
         # Convert timestamp to a human-readable date and time format
         self.date_time = datetime.utcfromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
 
-    def __repr__(self):
-        return f"{self.date_time}      {self.price} Eur"
+    def to_dict(self):
+        return {"time": self.date_time, "price": self.price}
 
 # Combine timestamps and prices into PriceData objects
 price_data_objects = []
@@ -36,6 +37,16 @@ for ts, price in zip(timestamps, prices):
     price_data = PriceData(ts, price)
     price_data_objects.append(price_data)
 
-# Print the deserialized data with converted timestamps
-for price_data in price_data_objects:
-    print(price_data)
+@app.route('/')
+def home():
+    # Custom message when accessing the root URL
+    return "Welcome to the Electric Price API!"
+
+@app.route('/api/prices', methods=['GET'])
+def get_prices():
+    # Return the prices as JSON
+    return jsonify({"prices": [price_data.to_dict() for price_data in price_data_objects]})
+
+if __name__ == '__main__':
+    # Running the Flask app on all available IP addresses (0.0.0.0) and port 5000
+    app.run(debug=True, host='0.0.0.0', port=5000)

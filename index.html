@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Day ahead Electricity Price </title>
-    <link rel="stylesheet" href="style.css">
+    <title>Day-ahead Electricity Prices</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
@@ -28,6 +28,44 @@
         </section>
     </div>
 
-    <script src="java.js"></script>
+    <script>
+        // Function to fetch prices from the Flask API and populate the table
+        async function fetchPrices() {
+            try {
+                // Fetch the data from the API endpoint
+                const response = await fetch('http://127.0.0.1:5000/api/prices');
+                const data = await response.json();
+
+                // Get the table body element
+                const tableBody = document.querySelector('#prices-table tbody');
+
+                // Clear any existing rows in the table body
+                tableBody.innerHTML = '';
+
+                // Loop through the prices data and create table rows
+                data.prices.forEach(priceData => {
+                    const row = document.createElement('tr');
+                    const timeCell = document.createElement('td');
+                    const priceCell = document.createElement('td');
+
+                    // Set the content for the cells
+                    timeCell.textContent = priceData.time;
+                    priceCell.textContent = priceData.price;
+
+                    // Append the cells to the row
+                    row.appendChild(timeCell);
+                    row.appendChild(priceCell);
+
+                    // Append the row to the table body
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error fetching prices:', error);
+            }
+        }
+
+        // Call the function to fetch prices when the page loads
+        window.onload = fetchPrices;
+    </script>
 </body>
 </html>
