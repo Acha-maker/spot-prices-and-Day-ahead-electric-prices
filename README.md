@@ -1,4 +1,4 @@
-# Days-ahead Prices  Documentation
+# Electricity Spot prices and Day ahead prices fetching and simmulation  Documentation
 
 
  The API Used here is Energy chart API which gives Electricity spot prices and  day ahead  prices for electricity as well as the 
